@@ -38,7 +38,7 @@ public class Document {
     ParseContext parseContext = new ParseContext();
     AutoDetectParser parser = new AutoDetectParser();
     LinkContentHandler linkHandler = new LinkContentHandler();
-    ContentHandler contentHandler = new BodyContentHandler();
+    ContentHandler contentHandler = new BodyContentHandler(-1);  // El valor -1 elimina el límite de caracteres para recuperar del documento
     TeeContentHandler teeHandler = new TeeContentHandler(linkHandler, contentHandler);
 
     /******************************* CONSTRUCTS ******************************/
@@ -66,8 +66,6 @@ public class Document {
             .setCoding(this.metadata.get("Content-Encoding"))
             .setLanguage(identifier.getLanguage())
             .setBody(body);
-
-        occurrences = new ArrayList<>();
     }
 
     /**
@@ -87,8 +85,6 @@ public class Document {
             .setCoding(coding)
             .setLanguage(language)
             .setBody(body);
-
-        occurrences = new ArrayList<>();
     }
 
     /*************************** GETTER AND SETTER ***************************/
@@ -213,16 +209,6 @@ public class Document {
         return this;
     }
 
-    /**
-     * Obtiene el listado de ocurrencias del documento.
-     * 
-     * @return List<Occurrence>
-     */
-    public List<Occurrence> getOccurrences()
-    {
-        return this.occurrences;
-    }
-
     /***************************** PUBLIC METHODS ****************************/
 
     /**
@@ -250,6 +236,28 @@ public class Document {
         }
     }
 
+    /**
+     * Método para obtener las ocurrencias de las distintas palabras del documento.
+     * 
+     * @return HashMap<String, Integer>
+     */
+    public HashMap<String, Integer> getOccurrences()
+    {
+        HashMap<String, Integer> occurrences = new HashMap <String, Integer> ();
+        
+        // Limpiamos el body del documento y separamos por espacios y saltos de linea.
+        String[] words = this.getBody().replaceAll("[\\(\\)¡!¿?→,.:;\\-—\"«»“”0123456789]", "").split("\\s+");
+        for (String word : words) {
+            word = word.toLowerCase();
+            int numOccurrences = 
+                occurrences.containsKey(word) ?
+                    occurrences.get(word) + 1 : 1;
+
+            occurrences.put(word, numOccurrences);
+        }
+
+        return occurrences;
+    }
     /***************************** PRIVARE METHODS ***************************/
 
     /***************************** STATIC METHODS ****************************/
