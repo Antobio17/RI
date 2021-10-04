@@ -1,9 +1,18 @@
 package documentsParser;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DocumentsParser {
     public static void main(String[] args) throws Exception {
@@ -45,6 +54,8 @@ public class DocumentsParser {
                     break;
 
                 case "-t":
+                    System.out.println("\nNombre: " + document.getName());
+                    createCSV(document.getName(), document.getOccurrences());
                     break;
 
                 default:
@@ -57,5 +68,44 @@ public class DocumentsParser {
                     break;
             }
         }
+    }
+
+    /**
+     * Método para crear un CSV con la ocurrencia de palabras de un archivo.
+     * 
+     * @param fileName String: nombre del documento de las ocurrencias.
+     * @param occurrences HasMap: ocurrencias del documento.
+     */
+    public static void createCSV(String fileName, HashMap<String, Integer> occurrences) 
+        throws FileNotFoundException
+    {
+        // Creamos el directorio donde almacenar el CSV
+        String ocurrencesDir = "ocurrencias/";
+        File newFolder = new File(ocurrencesDir);
+        newFolder.mkdir();
+
+        // Creamos el CSV
+        File csv = new File(ocurrencesDir + fileName.split("\\.")[0] + ".csv");
+        FileOutputStream is = new FileOutputStream(csv);
+        OutputStreamWriter osw = new OutputStreamWriter(is);
+        Writer w = new BufferedWriter(osw);
+
+        try {
+            // Escribimos las ocurrencias en el CSV ordenando los valores de mayor a menor
+            occurrences.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .forEach(pair -> {
+                    try {
+                        w.write(pair.getKey() + "; " + pair.getValue() + "\n");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+            });
+            w.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("El CSV de ocurrencias se ha creado correctamente en './ocurrencias'.");
     }
 }
