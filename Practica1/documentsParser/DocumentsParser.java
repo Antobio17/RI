@@ -55,7 +55,7 @@ public class DocumentsParser {
 
                 case "-t":
                     System.out.println("\nNombre: " + document.getName());
-                    createCSV(document.getName(), document.getOccurrences());
+                    DocumentsParser.createCSV(document.getName(), document.getOccurrences());
                     break;
 
                 default:
