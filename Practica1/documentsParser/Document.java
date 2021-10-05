@@ -32,7 +32,6 @@ public class Document {
     private String coding;
     private String language;
     private String body;
-    private List<Occurrence> occurrences;
 
     Metadata metadata = new Metadata();
     ParseContext parseContext = new ParseContext();
