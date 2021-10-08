@@ -11,6 +11,7 @@ import java.io.Writer;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -91,12 +92,13 @@ public class DocumentsParser {
         Writer w = new BufferedWriter(osw);
 
         try {
+            AtomicInteger counter = new AtomicInteger(1);
             // Escribimos las ocurrencias en el CSV ordenando los valores de mayor a menor
             occurrences.entrySet().stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .forEach(pair -> {
                     try {
-                        w.write(pair.getKey() + "; " + pair.getValue() + "\n");
+                        w.write(pair.getKey() + "; " + pair.getValue() + "; " + counter.getAndIncrement() + "\n");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
