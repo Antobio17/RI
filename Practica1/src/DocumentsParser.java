@@ -1,4 +1,4 @@
-package documentsParser;
+package src;
 
 import java.io.BufferedWriter;
 import java.io.File;
