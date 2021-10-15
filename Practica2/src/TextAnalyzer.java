@@ -20,6 +20,6 @@ public class TextAnalyzer {
         String file = args[1];
 
         TokenFilters tokenFilters = new TokenFilters();
-        tokenFilters.analyze("Hola vamos a probar esto no se si irá la verdad", option);
+        tokenFilters.analyze("Hola! Esta es la prueba para el apartado 2 de la práctica. Se aplicarán los distintos filtros de tokens.");
     }
 }
