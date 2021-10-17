@@ -41,9 +41,8 @@ public class TokenFilters {
     /**
      * Método para analizar una cadena de texto
      * @param string: cadena de texto a analizar.
-     * @param option: analizador a utilizar.
      */
-    public void analyze(String string) throws IOException
+    public void analyzeWithFilter(String string) throws IOException
     {
         System.out.println("Frase a a la que se le aplicaran los filtros: \n");
         System.out.println("    " + string + "\n");
@@ -149,7 +148,7 @@ public class TokenFilters {
 
                 TokenStream filter = new StopFilter(
                     source,
-                    StopFilter.makeStopSet(Arrays.asList("a", "la", "se"))
+                    StopFilter.makeStopSet(Arrays.asList("a", "la", "se", "el", "de", "los", "se"))
                 );
 
                 return new TokenStreamComponents(source, filter);
