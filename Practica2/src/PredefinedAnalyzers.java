@@ -48,8 +48,10 @@ public class PredefinedAnalyzers {
         Analyzer keywordAnalyzer = new KeywordAnalyzer();
         PredefinedAnalyzers.createCSV(
             "keyword",
-            keywordAnalyzer.tokenStream(null, body)
+            keywordAnalyzer.tokenStream(null, "Hagamos una prueba del keyword analizador porque no se que está haciendo. Pongo un punto también para ver como se comporta.")
         );
+
+        System.exit(0);
         
         Analyzer whitespaceAnalyzer = new WhitespaceAnalyzer();
         PredefinedAnalyzers.createCSV(
@@ -114,6 +116,7 @@ public class PredefinedAnalyzers {
         while (stream.incrementToken())
         {
             String word = stream.getAttribute(CharTermAttribute.class).toString().toLowerCase();
+            System.out.println(word);
             occurrences.put(
                 word,
                 occurrences.containsKey(word) ? occurrences.get(word) + 1 : 1

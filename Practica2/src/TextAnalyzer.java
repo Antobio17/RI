@@ -31,7 +31,7 @@ public class TextAnalyzer {
                 break;
 
             case "-iii":
-
+                TokenStream stream = new OwnAnalyzer().getStreamAnalizedFromDocument("docs/Don Quijote.txt");
                 break;
         }
     }
