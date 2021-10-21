@@ -48,7 +48,7 @@ public class PredefinedAnalyzers {
         Analyzer keywordAnalyzer = new KeywordAnalyzer();
         PredefinedAnalyzers.createCSV(
             "keyword",
-            keywordAnalyzer.tokenStream(null, "Hagamos una prueba del keyword analizador porque no se que está haciendo. Pongo un punto también para ver como se comporta.")
+            keywordAnalyzer.tokenStream(null, body)
         );
 
         System.exit(0);

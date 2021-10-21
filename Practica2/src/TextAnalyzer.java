@@ -1,6 +1,10 @@
 package src;
 
 import src.TokenFilters;
+import src.PredefinedAnalyzers;
+
+import org.apache.lucene.analysis.TokenStream;
+
 
 public class TextAnalyzer {
 
@@ -32,6 +36,7 @@ public class TextAnalyzer {
 
             case "-iii":
                 TokenStream stream = new OwnAnalyzer().getStreamAnalizedFromDocument("docs/Don Quijote.txt");
+                PredefinedAnalyzers.createCSV("analizador-propio" , stream);
                 break;
         }
     }

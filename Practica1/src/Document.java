@@ -257,6 +257,7 @@ public class Document {
 
         return occurrences;
     }
+    
     /***************************** PRIVARE METHODS ***************************/
 
     /***************************** STATIC METHODS ****************************/

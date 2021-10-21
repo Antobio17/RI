@@ -1,8 +1,14 @@
 package src;
 
+import src.Document;
+
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
+import java.io.FileNotFoundException;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.LowerCaseFilter;
 
 import org.apache.lucene.analysis.custom.CustomAnalyzer;
@@ -10,6 +16,10 @@ import org.apache.lucene.analysis.custom.CustomAnalyzer;
 import org.apache.lucene.analysis.core.StopFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+
+import org.xml.sax.SAXException;
+import org.apache.tika.exception.TikaException;
+
 
 public class OwnAnalyzer {
 
@@ -22,9 +32,9 @@ public class OwnAnalyzer {
     /**
      * OwnAnalyzer construct.
      */
-    public OwnAnalyzer()
+    public OwnAnalyzer() throws IOException
     {
-        analyzer = CustomAnalyzer.builder(Paths.get("./docs"))
+        analyzer = CustomAnalyzer.builder(Paths.get("./docs/"))
                         .withTokenizer("standard")
                         .addTokenFilter("lowercase")
                         .addTokenFilter(
@@ -50,7 +60,7 @@ public class OwnAnalyzer {
      * 
      * @return TokenStream
      */
-    public TokenStream getStreamAnalizedFromDocument(String fileName)
+    public TokenStream getStreamAnalizedFromDocument(String fileName) throws IOException, SAXException, TikaException, FileNotFoundException
     {
         File file = new File(fileName);
 
