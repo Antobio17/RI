@@ -34,7 +34,7 @@ public class OwnAnalyzer {
      */
     public OwnAnalyzer() throws IOException
     {
-        analyzer = CustomAnalyzer.builder(Paths.get("./docs/"))
+        analyzer = CustomAnalyzer.builder(Paths.get("./src"))
                         .withTokenizer("standard")
                         .addTokenFilter("lowercase")
                         .addTokenFilter(
