@@ -51,36 +51,36 @@ public class TokenFilters {
             switch(option)
             {
                 case "-l":
-                    System.out.println("LowerCaseFilter ->");
+                    System.out.println("\n\nLowerCaseFilter ->");
                     this.analyzer = this.lowerCaseFilterAnalyzer(string);
                     break;
                 case "-t":
-                    System.out.println("StopFilter ->");
+                    System.out.println("\n\nStopFilter ->");
                     this.analyzer = this.stopFilterAnalyzer(string);
                     break;
                 case "-b":
-                    System.out.println("SnowballFilter ->");
+                    System.out.println("\n\nSnowballFilter ->");
                     this.analyzer = this.snowballFilterAnalyzer(string, "Spanish");
                     break;
                 case "-h":
-                    System.out.println("ShingleFilter ->");
+                    System.out.println("\n\nShingleFilter ->");
                     this.analyzer = this.shingleFilterAnalyzer(string);
                     break;
                 case "-n":
-                    System.out.println("NGramTokenFilterFilter ->");
+                    System.out.println("\n\nNGramTokenFilter ->");
                     this.analyzer = this.nGramTokenFilterAnalyzer(string);
                     break;
                 case "-c":
-                    System.out.println("CommonGramsFilter ->");
+                    System.out.println("\n\nCommonGramsFilter ->");
                     this.analyzer = this.commonGramsFilterAnalyzer(string);
                     break;
                 case "-m":
-                    System.out.println("SynonymFilter ->");
+                    System.out.println("\n\nSynonymFilter ->");
                     this.analyzer = this.synonymFilterAnalyzer(string);
                     break;
                 case "-s":
                 default:
-                    System.out.println("StandarFilter ->");
+                    System.out.println("\n\nStandarFilter ->");
                     this.analyzer = this.standardFilterAnalyzer(string);
                     break;
             }
@@ -89,7 +89,11 @@ public class TokenFilters {
             stream.reset();
             while (stream.incrementToken())
             {
-                System.out.println("   " + stream.getAttribute(CharTermAttribute.class));
+                System.out.print(stream.getAttribute(CharTermAttribute.class) + " || ");
+                // stream.incrementToken();
+                // System.out.print("   " + stream.getAttribute(CharTermAttribute.class));
+                // stream.incrementToken();
+                // System.out.println("   " + stream.getAttribute(CharTermAttribute.class));
             }
             stream.end();
             stream.close();

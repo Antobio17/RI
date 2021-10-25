@@ -43,7 +43,7 @@ public class PredefinedAnalyzers {
         File file = new File(fileName);
 
         Document document = new Document(file);
-        String body = document.getBody();
+        String body = document.getBody().replaceAll(";", "");
 
         Analyzer keywordAnalyzer = new KeywordAnalyzer();
         PredefinedAnalyzers.createCSV(
@@ -51,8 +51,6 @@ public class PredefinedAnalyzers {
             keywordAnalyzer.tokenStream(null, body)
         );
 
-        System.exit(0);
-        
         Analyzer whitespaceAnalyzer = new WhitespaceAnalyzer();
         PredefinedAnalyzers.createCSV(
             "whitespace",
@@ -116,7 +114,6 @@ public class PredefinedAnalyzers {
         while (stream.incrementToken())
         {
             String word = stream.getAttribute(CharTermAttribute.class).toString().toLowerCase();
-            System.out.println(word);
             occurrences.put(
                 word,
                 occurrences.containsKey(word) ? occurrences.get(word) + 1 : 1
