@@ -19,18 +19,18 @@ public class InformationRetrievalSystem {
             System.exit(-1);
         }
 
+        Indexer indexer = new Indexer();
+
         for (String file : directory.list()) {
-            // TODO abrimos el csv y linea por linea:
             CSVReader reader = new CSVReader(new FileReader(directoryPath + file));
             List<String[]> allData = reader.readAll();
+
+            // TODO Guardamos las cabeceras
+
             for(String[] data : allData)
             {
-                for(String s : data)
-                {
-                    System.out.println(s);
-                }
+                indexer.index(data);
             }
-            // Indexer.index();
         }
     }
 }
