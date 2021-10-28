@@ -25,7 +25,9 @@ public class InformationRetrievalSystem {
             CSVReader reader = new CSVReader(new FileReader(directoryPath + file));
             List<String[]> allData = reader.readAll();
 
-            // TODO Guardamos las cabeceras
+            // Guardamos las cabeceras para la creación de documentos y las borramos de allData
+            String[] headers = allData.get(0);
+            allData.remove(0);
 
             for(String[] data : allData)
             {
