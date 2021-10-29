@@ -20,19 +20,29 @@ public class InformationRetrievalSystem {
         }
 
         Indexer indexer = new Indexer();
+        String[] headers = null;
+
+        System.out.println("Indexando documentos...\n");
 
         for (String file : directory.list()) {
             CSVReader reader = new CSVReader(new FileReader(directoryPath + file));
             List<String[]> allData = reader.readAll();
 
             // Guardamos las cabeceras para la creación de documentos y las borramos de allData
-            String[] headers = allData.get(0);
+            if (headers == null) {
+                headers = allData.get(0);
+            }
             allData.remove(0);
 
+            System.out.print("  -> Indexando " + file.toString() + "...\n");
             for(String[] data : allData)
             {
-                indexer.index(data);
+                indexer.index(data, headers);
             }
         }
+        
+        indexer.closeIndexer();
+
+        System.out.println("\nIndexación finalizada.");
     }
 }

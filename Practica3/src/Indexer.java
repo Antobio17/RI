@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.StringField;
 
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -28,11 +30,11 @@ public class Indexer {
      */
     public Indexer() throws IOException
     {
-        FSDirectory directory = FSDirectory.open(Paths.get("index/"));
+        FSDirectory directory = FSDirectory.open(Paths.get("./index"));
 
         Analyzer standardAnalyzer = new StandardAnalyzer();
         IndexWriterConfig config = new IndexWriterConfig(standardAnalyzer);
-        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
         
         writer = new IndexWriter(directory, config);
     }
@@ -42,9 +44,32 @@ public class Indexer {
      * @param data
      * @return
      */
-    public boolean index(String[] data) 
+    public boolean index(String[] data, String[] headers) throws IOException
     {
-        
+        Document document = new Document();
+
+        for(int i = 0; i < data.length; i++)
+        {
+            document.add(new TextField(headers[i], data[i], Field.Store.YES));
+            this.writer.addDocument(document);
+        }
+
+        return true;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public boolean closeIndexer()
+    {
+        try {
+            writer.commit();
+            writer.close();
+        } catch(IOException e) {
+            return false;
+        }
+
         return true;
     }
 }
