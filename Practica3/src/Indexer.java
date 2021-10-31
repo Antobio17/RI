@@ -6,7 +6,8 @@ import java.nio.file.Paths;
 
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.IntPoint; // Con esta clase no se almacena el valor, es mas rápido que IntField
+import org.apache.lucene.document.IntPoint;  // Con esta clase no se almacena el valor, es mas rápido que IntField
+import org.apache.lucene.document.LongPoint; // Con esta clase no se almacena el valor, es mas rápido que IntField
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.document.StringField;
 
@@ -51,94 +52,105 @@ public class Indexer {
 
         for(int i = 0; i < data.length; i++)
         {
-            switch (headers[i].toLowerCase()) {
-                case "authors":
-                    document.add(new TextField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "author(s) id":
-                    String[] idsStr = data[i].split(";");
-                    int[] ids = new int[idsStr.length];
-                    for (int j = 0; j < idsStr.length; j++) {
-                        // Añadir try/catch
-                        ids[j] = Integer.parseInt(idsStr[j]);
-                     }
-                    document.add(new IntPoint(headers[i], ids));
-                    break;
-                case "title":
-                    System.out.println(data[i]);
-                    System.exit(0);
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "year":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "source title":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "volume":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "issue":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "art. no.":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "page start":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "page end":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "page count":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "cited by":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "doi":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "link":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "affiliations":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "authors with affiliations":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "abstract":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "author keywords":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "index keywords":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "document type":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "publication stage":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "open access":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "source":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
-                case "eid":
-                    document.add(new StringField(headers[i], data[i], Field.Store.YES));
-                    break;
+            if (!data[i].equals("")){
+                switch (headers[i].toLowerCase()) {
+                    case "authors":
+                        document.add(new TextField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "author(s) id":
+                        // String[] idsStr = data[i].split(";");
+                        // long[] ids = new long[idsStr.length];
+                        // for (int j = 0; j < idsStr.length; j++) {
+                            // ids[j] = Long.parseLong(idsStr[j]);
+                        // }
+                        // document.add(new LongPoint(headers[i], ids));
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "title":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "year":
+                        int[] year = new int[1];
+                        year[0] = Integer.parseInt(data[i]);
+                        document.add(new IntPoint(headers[i], year));
+                        break;
+                    case "source title":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "volume":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "issue":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "art. no.":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "page start":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "page end":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "page count":
+                        int[] pageCount = new int[1];
+                        pageCount[0] = Integer.parseInt(data[i]);
+                        document.add(new IntPoint(headers[i], pageCount));
+                        break;
+                    case "cited by":
+                        // System.out.println(data[i]);
+                        // System.exit(0);
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "doi":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "link":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "affiliations":
+                        document.add(new TextField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "authors with affiliations":
+                        // Analizador propio?
+                        // System.out.println(data[i]);
+                        // System.exit(0);
+                        document.add(new TextField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "abstract":
+                        document.add(new TextField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "author keywords":
+                        // Separador de ;
+                        document.add(new TextField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "index keywords":
+                        // separador por ;
+                        document.add(new TextField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "document type":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "publication stage":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "open access":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "source":
+                        document.add(new TextField(headers[i], data[i], Field.Store.YES));
+                        break;
+                    case "eid":
+                        document.add(new StringField(headers[i], data[i], Field.Store.YES));
+                        break;
 
-                default:
-                    document.add(new TextField(headers[i], data[i], Field.Store.YES));
-                    break;
+                    default:
+                        document.add(new TextField(headers[i], data[i], Field.Store.YES));
+                        break;
+                }
             }
-            this.writer.addDocument(document);
         }
+        this.writer.addDocument(document);
 
         return true;
     }
