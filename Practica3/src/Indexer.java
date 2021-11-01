@@ -20,6 +20,8 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
+import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
+
 
 public class Indexer {
 
@@ -169,5 +171,69 @@ public class Indexer {
         }
 
         return true;
+    }
+
+    /**
+     * 
+     * @param headers
+     * @return
+     */
+    protected PerFieldAnalyzerWrapper getPerFieldAnalyzer(String[] headers)
+    {
+        for(String header : headers)
+        {
+            switch (header.toLowerCase()) {
+                case "authors":
+                    break;
+                case "author(s) id":
+                    break;
+                case "title":
+                    break;
+                case "year":
+                    break;
+                case "source title":
+                    break;
+                case "volume":
+                    break;
+                case "issue":
+                    break;
+                case "art. no.":
+                    break;
+                case "page start":
+                    break;
+                case "page end":
+                    break;
+                case "page count":
+                    break;
+                case "cited by":
+                    break;
+                case "doi":
+                    break;
+                case "link":
+                    break;
+                case "affiliations":
+                    break;
+                case "authors with affiliations":
+                    break;
+                case "abstract":
+                    break;
+                case "author keywords":
+                    break;
+                case "index keywords":
+                    break;
+                case "document type":
+                    break;
+                case "publication stage":
+                    break;
+                case "open access":
+                    break;
+                case "source":
+                    break;
+                case "eid":
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
