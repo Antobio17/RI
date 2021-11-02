@@ -19,7 +19,7 @@ public class InformationRetrievalSystem {
             System.exit(-1);
         }
 
-        Indexer indexer = new Indexer();
+        Indexer indexer = null;
         String[] headers = null;
 
         System.out.println("Indexando documentos...\n");
@@ -33,6 +33,10 @@ public class InformationRetrievalSystem {
                 headers = allData.get(0);
             }
             allData.remove(0);
+            // Creamos el indexer en caso de no haberlo creado
+            if (indexer == null) {
+                indexer = new Indexer(headers);
+            }
 
             System.out.print("  -> Indexando " + file.toString() + "...\n");
             for(String[] data : allData)
