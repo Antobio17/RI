@@ -41,8 +41,9 @@ public class InformationRetrievalSystem {
                 indexer.index(nextLine, headers);
             }
         }
-        
-        indexer.closeIndexer();
+
+        if (indexer != null)
+            indexer.closeIndexer();
 
         System.out.println("\nIndexación finalizada.");
     }
