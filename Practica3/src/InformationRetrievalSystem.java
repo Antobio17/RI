@@ -26,22 +26,19 @@ public class InformationRetrievalSystem {
 
         for (String file : directory.list()) {
             CSVReader reader = new CSVReader(new FileReader(directoryPath + file));
-            List<String[]> allData = reader.readAll();
 
+            
             // Guardamos las cabeceras para la creación de documentos y las borramos de allData
-            if (headers == null) {
-                headers = allData.get(0);
-            }
-            allData.remove(0);
+            headers = reader.readNext();
+            
             // Creamos el indexer en caso de no haberlo creado
-            if (indexer == null) {
+            if (indexer == null)
                 indexer = new Indexer(headers);
-            }
-
+            
             System.out.print("  -> Indexando " + file.toString() + "...\n");
-            for(String[] data : allData)
-            {
-                indexer.index(data, headers);
+            String [] nextLine;
+            while ((nextLine = reader.readNext()) != null) {
+                indexer.index(nextLine, headers);
             }
         }
         
